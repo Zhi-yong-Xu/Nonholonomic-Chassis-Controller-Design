@@ -1,4 +1,4 @@
-# Trajectory-Tracking-Controller-Design-for-a-Nonholonomic-Chassis-Husky-
+# Trajectory-Tracking-Controller-Design-for-Nonholonomic-Chassis
 A switching control strategy combining forward and reverse driving is proposed to prevent large attitude flips from position overshoot, where a fixed-time differentiator provides attitude feedforward compensation to avoid control singularities.
 
 ## 文件说明
