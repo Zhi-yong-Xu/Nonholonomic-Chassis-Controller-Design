@@ -1,8 +1,4 @@
-%% ============================================================
-%  DS_FD 严格对应 MATLAB 版本
-%  FTDSO + 理论版姿态环(ρ·α_til) + 内环积分 + 死区补偿 + 指令限幅
-%  被控对象: 简化轮动力学 + 差速运动学 (替代 MuJoCo husky.xml)
-%% ============================================================
+
 clear; clc; close all;
 
 sig        = @(x,p) abs(x).^p .* sign(x);
@@ -19,29 +15,27 @@ Omega = [1/r_w,  a_w/r_w;
          1/r_w, -a_w/r_w];
 
 % ---- 简化被控对象 (替代 MuJoCo) ----
-% DS.py 中: Iw=0.04411, 粘性摩擦此处取 b_wheel=1.0
-% 注: 若需更接近 MuJoCo, 可把车体惯量折算进 I_wheel
 I_wheel = 0.05;
 b_wheel = 1.0;
 
 %% ============================================================
-%  2. 参考轨迹 (DS_FD: R=4.0, wr=0.3)
+%  2. 参考轨迹
 %% ============================================================
 R_path = 4.0;
 wr     = 0.3;
 vr     = R_path * wr;
 
 %% ============================================================
-%  3. 控制器参数 (严格取自 DS_FD)
+%  3. 控制器参数
 %% ============================================================
 % 位置环
 K_R1 = 5.0;  K_R2 = 5.0;  P1 = 0.5;  P2 = 2.0;
 
-% 姿态环（前馈 + ρ加权双幂次反馈, 无死区分段）
+% 姿态环
 K_A0 = 30.0;
 K_A1 = 20.0;  K_A2 = 10.0;
 
-% ---- 指令限幅 (DS_FD 特有) ----
+% ---- 指令限幅 ----
 V_MAX = 5.0;    % [m/s]
 W_MAX = 10.0;   % [rad/s]
 
@@ -49,13 +43,13 @@ W_MAX = 10.0;   % [rad/s]
 K_o1 = 30.0;  K_o2 = 20.0;
 p_o1 = 1.0;   p_o2 = 1.2;
 
-% 内环轮速 PID（含积分, DS_FD 特有）
+% 内环轮速 PID
 kp_w = 50.0;  ki_w = 10.0;  kd_w = 0.5;
 int_w_max = 4.0;
 d_filt_alpha = 0.95;
 tau_max = 100.0;
 
-% 死区补偿力矩 (DS_FD 特有, 符号: 右+ 左-)
+% 死区补偿力矩
 tau_DZ = 20.0;
 
 %% ============================================================
@@ -66,8 +60,7 @@ simul_time = 30.0;
 n_steps    = round(simul_time / dt);
 
 %% ============================================================
-%  5. 初态设置 (对应 DS_FD: 原点出发, 轮速为零)
-%    注: MuJoCo 的 2000 步自由落体稳定在此不适用(无重力模型)
+%  5. 初态设置
 %% ============================================================
 x_now   = 0.0;
 y_now   = 0.0;
@@ -78,7 +71,7 @@ phi_L   = 0.0;
 % 内环状态
 dPhi_filt = zeros(2,1);
 Phi_prev  = zeros(2,1);
-int_w     = zeros(2,1);      % DS_FD 特有: 内环积分状态
+int_w     = zeros(2,1);     
 
 % FTDSO 状态
 obs_state = [R_path; 0.0];
@@ -89,8 +82,8 @@ obs_state = [R_path; 0.0];
 q_log     = zeros(3, n_steps);
 qr_log    = zeros(3, n_steps);
 qe_log    = zeros(3, n_steps);
-tau_log   = zeros(2, n_steps);    % 记录 PID 输出(补偿前), 与 DS_FD 一致
-tauc_log  = zeros(2, n_steps);    % 新增: 补偿后实际指令 (便于检查)
+tau_log   = zeros(2, n_steps);   
+tauc_log  = zeros(2, n_steps);    
 vref_log  = zeros(2, n_steps);
 vest_log  = zeros(2, n_steps);
 thff_log  = zeros(1, n_steps);
@@ -102,7 +95,7 @@ b_log     = zeros(1, n_steps);
 beta_log  = zeros(1, n_steps);
 rho_log   = zeros(1, n_steps);
 vd_log    = zeros(1, n_steps);
-intw_log  = zeros(2, n_steps);    % DS_FD 特有
+intw_log  = zeros(2, n_steps);    
 
 %% ============================================================
 %  7. 主循环
@@ -117,7 +110,7 @@ for k = 1:n_steps
           R_path*sin(wr*t);
           wr*t + pi/2.0];
 
-    % ---- 外环: FTDSO + 理论版姿态环 (与 DS_FD 逐行对应) ----
+    % ---- 外环: FTDSO + 理论版姿态环 ----
     [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
         K_o1, K_o2, p_o1, p_o2, ...
         K_R1, K_R2, P1, P2, K_A0, K_A1, K_A2, ...
@@ -126,13 +119,13 @@ for k = 1:n_steps
     % ---- 逆运动学 ----
     Phi_ref = Omega * Vref;
 
-    % ---- 内环 PID (含积分, DS_FD 版) ----
+    % ---- 内环 PID ----
     [tau, dPhi_filt, int_w] = wheel_speed_pid(Phi_ref, Phi, ...
         dPhi_filt, Phi_prev, int_w, dt, ...
         kp_w, ki_w, kd_w, int_w_max, d_filt_alpha, tau_max);
     Phi_prev = Phi;
 
-    % ---- 死区补偿力矩 (DS_FD 符号: 右+ 左-) ----
+    % ---- 死区补偿力矩 ----
     w_c = Vref(2);
     if     w_c >  1e-3, sgn =  1.0;
     elseif w_c < -1e-3, sgn = -1.0;
@@ -179,7 +172,7 @@ end
 t_axis = (0:n_steps-1) * dt;
 
 %% ============================================================
-%  8. 绘图 (与 DS_FD 图组对应)
+%  8. 绘图
 %% ============================================================
 
 % ---- 轨迹 ----
@@ -269,7 +262,7 @@ yline( tau_max, 'k--'); yline(-tau_max, 'k--');
 xlabel('Time [s]'); ylabel('\tau [N\cdotm]');
 title('实际指令 (含 \pm\tau_{DZ}/2 死区补偿)'); legend('右轮','左轮'); grid on;
 
-% ---- 内环积分状态 (DS_FD 特有) ----
+% ---- 内环积分状态 ----
 figure('Name','内环积分');
 plot(t_axis, intw_log(1,:), 'b'); hold on;
 plot(t_axis, intw_log(2,:), 'r');
@@ -278,7 +271,7 @@ xlabel('Time [s]'); ylabel('\int e_\phi dt [rad]');
 title('内环轮速积分状态'); legend('右轮','左轮'); grid on;
 
 %% ============================================================
-%  9. 子函数 —— 与 DS_FD 的 cascade_ftc 逐行对应
+%  9. 子函数 
 %% ============================================================
 function [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
         K_o1, K_o2, p_o1, p_o2, ...
@@ -303,7 +296,7 @@ function [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
     yr_hat = yr_hat + vry_est * dt;
     obs_state = [xr_hat; yr_hat];
 
-    % ---- 期望航向 (DS_FD: 无奇异保护, 直接 atan2) ----
+    % ---- 期望航向 ----
     theta_fb = atan2(ey, ex);
     theta_ff = atan2(vry_est, vrx_est);
 
@@ -311,7 +304,7 @@ function [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
     alpha    = wrap_to_pi(theta_fb - q(3));
     alpha_ff = wrap_to_pi(theta_ff - q(3));
 
-    % ---- 模式切换 (理论判据, 无滞回) ----
+    % ---- 模式切换 ----
     beta = wrap_to_pi(theta_fb - theta_ff);
     if abs(beta) > pi/2,  b = 1;  else,  b = 0;  end
     alpha_til = wrap_to_pi(alpha - b*pi);
@@ -320,12 +313,12 @@ function [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
     v_d = K_R1*sig(rho, P1) + K_R2*sig(rho, P2);
     v_c = v_d * cos(alpha);
 
-    % ---- 姿态环 (理论版: 前馈 + ρ加权双幂次, 无死区分段) ----
+    % ---- 姿态环 ----
     omega_c = K_A0 * alpha_ff ...
             + K_A1 * sig(rho*alpha_til, P1) ...
             + K_A2 * sig(rho*alpha_til, P2);
 
-    % ---- 指令限幅 (DS_FD 特有) ----
+    % ---- 指令限幅 ----
     v_c     = max(min(v_c,     V_MAX), -V_MAX);
     omega_c = max(min(omega_c, W_MAX), -W_MAX);
 
@@ -353,7 +346,7 @@ function [Vref, qe, obs_state, dbg] = cascade_ftc(qr, q, obs_state, dt, ...
 end
 
 %% ============================================================
-%  10. 子函数 —— 内环 PID (含积分, 与 DS_FD 逐行对应)
+%  10. 子函数 —— 内环 PID
 %% ============================================================
 function [tau, dPhi_filt, int_w] = wheel_speed_pid(Phi_ref, Phi, ...
         dPhi_filt, Phi_prev, int_w, dt, ...
