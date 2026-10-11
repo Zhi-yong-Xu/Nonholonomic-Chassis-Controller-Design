@@ -1,0 +1,6 @@
+# requirements.txt
+# python: 3.11.x
+numpy==1.26.4
+mujoco==3.12.0
+pyyaml==6.0.2
+matplotlib==3.10.1
