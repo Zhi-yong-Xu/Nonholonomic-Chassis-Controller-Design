@@ -308,4 +308,7 @@ $$
 ## 4. 内环：轮速 PID
 外环输出 $(v_c,\omega_c)$ 经 $\Omega$ 得到轮速参考 $\Phi_{ref}=[\omega_R^{ref},\omega_L^{ref}]^\top$。实际轮速 $\Phi=[\phi_R,\phi_L]^\top$ 通过PID控制 + 静摩擦死区补偿跟踪参考速度。
 
+# 展示
+
+<img width="685" height="415" alt="image" src="https://github.com/user-attachments/assets/6c827a57-b1f4-4b84-a408-fa3101b26108" />
 
