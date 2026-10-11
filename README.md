@@ -16,6 +16,8 @@ A switching control strategy combining forward and reverse driving is proposed t
 
 `/src` --- 观测器，控制器等代码实现
 
+`/MATsim` --- 控制器对应的matlab仿真
+
 
 
 
