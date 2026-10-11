@@ -4,6 +4,6 @@ A switching control strategy combining forward and reverse driving is proposed t
 ## 文件说明
 `/model` --- 非完整约束底盘(husky)的mjcf模型
 
-`ZoneCalibration.py` --- 当前场景静摩擦死区标定文件
+`ZoneCalibration.py` --- 当前场景静摩擦死区标定文件 (用于动力学环的死区补偿)
 
 
