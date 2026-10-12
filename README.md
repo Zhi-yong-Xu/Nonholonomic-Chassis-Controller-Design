@@ -25,7 +25,15 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 # NSBC基本理论
 
 1. **任务函数设计**：设计 $i$ 个任务定义任务函数 $z_i = f_i(q) \in \mathbb{R}^{m_i}$，并给定期望值 $z_i^*$。
-2. **求解任务函数的雅可比**：$J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i * 3}$，得到 $\dot z_i = J_i\,\dot q$。
+2. **求解任务函数的雅可比**：定义任务雅可比矩阵
+
+  $$
+  J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i \times 3}
+  $$
+  
+  得到 $\dot z_i = J_i\,\dot q$。
+
+3. 
 
 
 # 展示
