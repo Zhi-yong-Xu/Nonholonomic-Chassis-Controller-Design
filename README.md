@@ -20,14 +20,16 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 
 
 
-# 轨迹跟踪切换控制器设计见V1版本的 `Readme.md`
+## 轨迹跟踪切换控制器设计见V1版本的 `Readme.md`
 
-### 基于零空间行为控制的任务设计流程
+## 基于零空间行为控制的任务设计流程
 
 1. **任务函数设计**：设计 $i$ 个任务，定义任务函数
-   $$
+
+$$
    z_i = f_i(q) \in \mathbb{R}^{m_i}
-   $$
+$$
+
    其中 $z_i$ 是关于 $q$ 的可测函数，并给定期望值 $z_i^*$。
 
 2. **求解任务函数的雅可比矩阵**：定义任务雅可比矩阵
