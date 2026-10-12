@@ -192,7 +192,7 @@ $$
 $$
 \boldsymbol{p}_o = \arg\min_{\boldsymbol{p}_j \in \partial\mathcal{O}} \|\boldsymbol{p} - \boldsymbol{p}_j\|^2, \qquad
 d(\boldsymbol{q}) = \|\boldsymbol{p} - \boldsymbol{p}_o\| - r_c, \qquad
-\hat{\boldsymbol{u}} = \frac{\boldsymbol{p} - \boldsymbol{p}_o}{d}
+\hat{\boldsymbol{u}} = \frac{\boldsymbol{p} - \boldsymbol{p}_o}{\|\boldsymbol{p} - \boldsymbol{p}_o\|}
 $$
 
 碰撞条件即 $d \leq 0$。
