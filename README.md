@@ -116,7 +116,19 @@ $$
 
 ## 基于零空间行为控制的非完整移动底盘轨迹跟踪 + 避障控制律
 
-### 任务空间，状态空间和控制空间的定义和映射关系
+### 构型空间，任务空间和控制空间的定义和映射关系
+
+- **构型空间（状态空间）**：$\boldsymbol{q} \in \mathbb{R}^3$，任务函数的自变量
+
+$$
+\boldsymbol{q} = \begin{bmatrix} x \\ y \\ \theta \end{bmatrix} \in \mathbb{R}^3
+$$
+
+其中 $(x,y)$ 为底盘位置，$\theta$ 为航向角。
+
+- **任务空间**：$\boldsymbol{z}_i = h_i(\boldsymbol{q}) \in \mathbb{R}^{m_i}$，第 $i$ 个任务函数的像
+
+- **控制空间**：$\boldsymbol{v} \in \mathbb{R}^2$，底盘车体坐标速度
 
 ### 轨迹跟踪任务函数和雅可比矩阵
 
