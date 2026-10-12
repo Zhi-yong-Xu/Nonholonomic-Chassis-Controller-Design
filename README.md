@@ -118,7 +118,7 @@ $$
 
 ### 构型空间，任务空间和控制空间的定义和映射关系
 
-- **构型空间（状态空间）**：$\mathbf{q} \in \mathbb{R}^3$，任务函数的自变量
+- **构型空间（状态空间）**：$`\boldsymbol{q} \in \mathbb{R}^3`$ ，任务函数的自变量
 
 $$
 \boldsymbol{q} = \begin{bmatrix} x \\ y \\ \theta \end{bmatrix} \in \mathbb{R}^3
