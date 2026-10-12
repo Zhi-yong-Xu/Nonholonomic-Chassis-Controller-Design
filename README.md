@@ -173,7 +173,7 @@ h_m(\boldsymbol{q}) = \boldsymbol{q}, \qquad
 J_m = \frac{\partial h_m}{\partial \boldsymbol{q}} = I_3 \in \mathbb{R}^{3\times 3}
 $$
 
-注意：$J_m = I_3$ 意味着该任务的零空间为 $\{\boldsymbol{0}\}$.
+注意：$`J_m = I_3`$ 意味着该任务的零空间为 $\{\boldsymbol{0}\}$.
 
 由于本项目的控制律在V1中已经设计完成（计为$`\boldsymbol{v}_m = [ u_m; \omega_m]`$），故对应的任务空间速度通过
 
@@ -181,7 +181,7 @@ $$
 \dot{\boldsymbol{q}}_m = R(\theta)R^{+}(\theta)\,\boldsymbol{v}_m
 $$
 
-获得
+获得。
 
 ### 避障任务函数
 
