@@ -161,7 +161,27 @@ $$
 
 把期望速度分解为“沿航向的平移分量 + 航向转动分量”，**垂直于航向的侧向分量被投影消除**——这正是非完整约束 $\dot{x}\sin\theta - \dot{y}\cos\theta = 0$ 在控制层面的体现。
 
+**Tip:** 非完整约束底盘是欠驱动系统，故任务空间的合成速度不一定可达，这是和机械臂这类全驱动系统最本质的区别。
+
 ### 轨迹跟踪任务函数和雅可比矩阵
+
+轨迹跟踪任务直接以完整构型为任务变量（**恒等任务**）：
+
+$$
+h_m(\boldsymbol{q}) = \boldsymbol{q}, \qquad
+\boldsymbol{z}_m = \begin{bmatrix} x \\\\ y \\\\ \theta \end{bmatrix}, \qquad
+J_m = \frac{\partial h_m}{\partial \boldsymbol{q}} = I_3 \in \mathbb{R}^{3\times 3}
+$$
+
+注意：$J_m = I_3$ 意味着该任务的零空间为 $\{\boldsymbol{0}\}$.
+
+由于本项目的控制律在V1中已经设计完成（计为$`\boldsymbol{v}_m = [ u_m; \omega_m]`$），故对应的任务空间速度通过
+
+$$
+\dot{\boldsymbol{q}}_m = R(\theta)R^{+}(\theta)\,\boldsymbol{v}_m
+$$
+
+获得
 
 ### 避障任务函数
 
