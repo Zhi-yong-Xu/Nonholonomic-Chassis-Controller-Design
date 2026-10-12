@@ -4,8 +4,6 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 ## 文件说明
 `/model` --- 非完整约束底盘(husky)的mjcf模型
 
-`ZoneCalibration.py` --- 当前场景静摩擦死区标定文件 (用于动力学环的死区补偿)
-
 `requirements.txt` --- 安装依赖
 
 `main.py` --- 主文件，直接 `python main.py` 运行
