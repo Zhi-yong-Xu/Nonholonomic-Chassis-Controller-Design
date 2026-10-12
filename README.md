@@ -37,6 +37,7 @@ $$
 - $\omega$ 是角速度。
 
 **非完整约束**：$\dot p = v\,h$，其中
+
 $$
 h \triangleq \begin{bmatrix}c_\theta\\\\ s_\theta\end{bmatrix}
 $$
