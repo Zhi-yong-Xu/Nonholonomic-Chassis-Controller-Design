@@ -191,10 +191,11 @@ $$
 
 $$
 \boldsymbol{p}_o = \arg\min_{\boldsymbol{p}_j \in \partial\mathcal{O}} \|\boldsymbol{p} - \boldsymbol{p}_j\|^2, \qquad
-d(\boldsymbol{q}) = \|\boldsymbol{p} - \boldsymbol{p}_o\|, \qquad
+d(\boldsymbol{q}) = \|\boldsymbol{p} - \boldsymbol{p}_o\| - r_c, \qquad
 \hat{\boldsymbol{u}} = \frac{\boldsymbol{p} - \boldsymbol{p}_o}{d}
 $$
 
+碰撞条件即 $d \leq 0$。
 
 避障任务函数取二维向量：
 
@@ -207,7 +208,7 @@ $$
 
 #### 雅可比矩阵
 
-对 $d$ 求梯度：$`\nabla_{\boldsymbol{p}} d = \hat{\boldsymbol{u}}^T`$；对 $\theta$ 求梯度为 $[0\; 0\; 1]$。故：
+对 $d$ 求梯度：$`\nabla_{\boldsymbol{p}}, d = \nabla_{\boldsymbol{p}}!\left(|\boldsymbol{p}-\boldsymbol{p}_o| - r_c\right) = \frac{\boldsymbol{p}-\boldsymbol{p}_o}{|\boldsymbol{p}-\boldsymbol{p}_o|} = \hat{\boldsymbol{u}}`$；对 $\theta$ 求梯度为 $[0\; 0\; 1]$。故：
 
 $$
 J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\partial d}{\partial y} & \dfrac{\partial d}{\partial \theta} \\\\[6pt] \dfrac{\partial \theta}{\partial x} & \dfrac{\partial \theta}{\partial y} & \dfrac{\partial \theta}{\partial \theta} \end{bmatrix}
