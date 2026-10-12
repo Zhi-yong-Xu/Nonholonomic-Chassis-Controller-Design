@@ -214,10 +214,13 @@ $$
 J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\partial d}{\partial y} & \dfrac{\partial d}{\partial \theta} \\\\[6pt] \dfrac{\partial \theta}{\partial x} & \dfrac{\partial \theta}{\partial y} & \dfrac{\partial \theta}{\partial \theta} \end{bmatrix}
 = \begin{bmatrix} \hat{u}_x & \hat{u}_y & 0 \\\\ 0 & 0 & 1 \end{bmatrix} \in \mathbb{R}^{2\times 3}
 $$
+
 其两行单位正交，因此伪逆有解析形式 $J_o^{+} = J_o^T$：
+
 $$
 J_o^{+} = \begin{bmatrix} \hat{u}_x & 0 \\\\ \hat{u}_y & 0 \\\\ 0 & 1 \end{bmatrix}
 $$
+
 #### 期望任务变量与逃逸航向
 
 期望任务变量为“安全距离 + 切向逃逸航向”：
