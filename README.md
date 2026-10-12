@@ -187,7 +187,7 @@ $$
 
 #### 任务函数
 
-设障碍物边界点集为 $\partial\mathcal{O}$，先取最近点：
+把车视为半径 $r_c$ 的圆盘，车心 $`\boldsymbol{p} = [x,y]^T`$，设障碍物边界点集为 $\partial\mathcal{O}$，先取最近点：
 
 $$
 \boldsymbol{p}_o = \arg\min_{\boldsymbol{p}_j \in \partial\mathcal{O}} \|\boldsymbol{p} - \boldsymbol{p}_j\|^2, \qquad
