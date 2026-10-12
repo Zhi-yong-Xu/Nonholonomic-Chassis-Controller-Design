@@ -59,7 +59,7 @@ class CascadeFTC:
         v_c = v_d * np.cos(alpha)
 
         # ---- 姿态环（前馈 + 反馈）----
-        omega_c = (self.K_A0 * alpha_ff
+        omega_c = (self.K_A0 * alpha_ff / rho
                    + self.K_A1 * sig(rho * alpha_til, self.P1)
                    + self.K_A2 * sig(rho * alpha_til, self.P2))
 
