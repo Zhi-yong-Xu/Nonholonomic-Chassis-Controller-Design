@@ -24,13 +24,7 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 
 # NSBC基本理论
 
-1. **任务函数设计**：对第 $i$ 个任务定义任务函数
-
-  $$
-  z_i = f_i(q) \in \mathbb{R}^{m_i}
-  $$
-
-  并给定期望值 $z_i^*$。
+1. **任务函数设计**：设计 $i$ 个任务定义任务函数 $ z_i = f_i(q) \in \mathbb{R}^{m_i}$ , 并给定期望值 $z_i^*$。
 
 
 # 展示
