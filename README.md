@@ -22,7 +22,7 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 
 ## 轨迹跟踪切换控制器设计见V1版本的 `Readme.md`
 
-## 基于零空间行为控制的任务设计流程
+### 基于零空间行为控制的任务设计流程
 
 1. **任务函数设计**：设计 $i$ 个任务，定义任务函数
 
@@ -79,6 +79,52 @@ $$
 即任务速率被精确实现，且在所有可行解中 $\dot{q}_i$ 的范数最小。
 
 5. **优先级融合与逆映射**：按照任务优先级对各任务速度进行融合，得到总的期望广义速度 $\dot{q}_{\mathrm{des}}$，再通过底盘运动学逆映射得到底盘控制输入 $(v,\omega)$。
+
+### 多级零空间行为控制链式展开
+
+$$
+\dot{q}_{\mathrm{des}}
+= \dot{q}_1
++ N_1 \Big(
+    \dot{q}_2
+    + N_2 \big(
+        \dot{q}_3
+        + \cdots
+        + N_{p-2} \big(
+            \dot{q}_{p-1}
+            + N_{p-1} \dot{q}_p
+        \big)
+    \big)
+\Big)
+$$
+
+其中：
+
+$$
+\dot{q}_i = J_i^{+} \dot{z}_i^{\mathrm{des}}
+$$
+
+$$
+N_i = I - J_i^{+} J_i
+$$
+
+等价求和形式：
+
+$$
+\dot{q}_{\mathrm{des}}
+= \sum_{i=1}^{p}
+\left( \prod_{k=1}^{i-1} N_k \right) \dot{q}_i
+$$
+
+约定：
+
+$$
+\prod_{k=1}^{0} N_k = I
+$$
+
+因此第一项即为 $\dot{q}_1$。
+
+
 
 # 展示
 
