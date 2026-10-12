@@ -42,6 +42,8 @@ $$
 h \triangleq \begin{bmatrix}c_\theta\\\\ s_\theta\end{bmatrix}
 $$
 
+为车头方向单位向量。实际速度只能沿 $h$，垂直于 $h$ 的期望分量物理上不可执行
+
 ## 2. 误差系统建模
 
 设参考位姿 $q_r=[x_r,y_r,\theta_r]^T$，定义全局位置误差：
