@@ -121,7 +121,7 @@ $$
 - **构型空间（状态空间）**：$`\boldsymbol{q} \in \mathbb{R}^3`$ ，任务函数的自变量
 
 $$
-\boldsymbol{q} = \begin{bmatrix} x \\ y \\ \theta \end{bmatrix} \in \mathbb{R}^3
+\boldsymbol{q} = \begin{bmatrix} x \\\\ y \\\\ \theta \end{bmatrix} \in \mathbb{R}^3
 $$
 
 其中 $(x,y)$ 为底盘位置，$\theta$ 为航向角。
