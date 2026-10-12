@@ -127,7 +127,39 @@ $$
 
 - **任务空间**：$`\mathbf{z}_i = h_i(\mathbf{q}) \in \mathbb{R}^{m_i}`$，第 $i$ 个任务函数的像
 
-- **控制空间**：$\boldsymbol{v} \in \mathbb{R}^2$，底盘车体坐标速度
+- **控制空间**：$`\boldsymbol{v} \in \mathbb{R}^2`$，底盘车体坐标速度
+
+$$
+\boldsymbol{v} = \begin{bmatrix} u \\\\ \omega \end{bmatrix} \in \mathbb{R}^2
+$$
+
+构型空间速度与控制空间之间由**输出映射** $R(\theta)$ 联系：
+
+$$
+\dot{\boldsymbol{q}} = R(\theta)\,\boldsymbol{v}, \qquad
+R(\theta) = \begin{bmatrix} \cos\theta & 0 \\\\ \sin\theta & 0 \\\\ 0 & 1 \end{bmatrix} \in \mathbb{R}^{3\times 2}
+$$
+
+由于 $R(\theta)$ 列满秩且列向量正交归一，其最小二乘逆即转置：
+
+$$
+R^{+}(\theta) = R^T(\theta) = \begin{bmatrix} \cos\theta & \sin\theta & 0 \\\\ 0 & 0 & 1 \end{bmatrix}
+$$
+
+因此给定构型空间的期望速度 $\dot{\boldsymbol{q}}_{cmd}$，可实现的速度指令为它在 $R(\theta)$ 列空间上的投影：
+
+$$
+\boldsymbol{v} = R^{+}(\theta)\,\dot{\boldsymbol{q}}_{cmd}, \qquad
+\dot{\boldsymbol{q}} = R(\theta)R^{+}(\theta)\,\dot{\boldsymbol{q}}_{cmd} \equiv P_R(\theta)\,\dot{\boldsymbol{q}}_{cmd}
+$$
+
+投影算子
+
+$$
+P_R(\theta) = R R^T = \begin{bmatrix} \cos^2\theta & \sin\theta\cos\theta & 0 \\ \sin\theta\cos\theta & \sin^2\theta & 0 \\ 0 & 0 & 1 \end{bmatrix}
+$$
+
+把期望速度分解为“沿航向的平移分量 + 航向转动分量”，**垂直于航向的侧向分量被投影消除**——这正是非完整约束 $\dot{x}\sin\theta - \dot{y}\cos\theta = 0$ 在控制层面的体现。
 
 ### 轨迹跟踪任务函数和雅可比矩阵
 
