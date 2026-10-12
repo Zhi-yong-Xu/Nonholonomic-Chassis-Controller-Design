@@ -215,32 +215,43 @@ J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\p
 $$
 其两行单位正交，因此伪逆有解析形式 $J_o^{+} = J_o^T$：
 $$
-J_o^{+} = \begin{bmatrix} \hat{u}_x & 0 \\ \hat{u}_y & 0 \\ 0 & 1 \end{bmatrix}
+J_o^{+} = \begin{bmatrix} \hat{u}_x & 0 \\\\ \hat{u}_y & 0 \\\\ 0 & 1 \end{bmatrix}
 $$
-### 3.3 期望任务变量与逃逸航向
+#### 期望任务变量与逃逸航向
+
 期望任务变量为“安全距离 + 切向逃逸航向”：
+
 $$
-\boldsymbol{z}_o^{d} = \begin{bmatrix} d_{safe} \\ \theta_d \end{bmatrix}
+\boldsymbol{z}_o^{d} = \begin{bmatrix} d_{safe} \\\\ \theta_d \end{bmatrix}
 $$
+
 其中 $\theta_d$ 把“指向障碍物”的方向旋转 $\pm 90°$，绕行侧依据智能体相对障碍物的纵向位置：
+
 $$
 \theta_d = \operatorname{atan2}(y_o - y,\; x_o - x) + \sigma\frac{\pi}{2}, \qquad
 \sigma = \begin{cases} +1, & y > y_o \\ -1, & y \leq y_o \end{cases}
 $$
-### 3.4 任务速度指令
+
+#### 任务速度指令
 任务空间误差做比例控制，再经 $J_o^{+}$ 映射到构型空间：
+
 $$
 \dot{\boldsymbol{q}}_o = J_o^{+}\, k_o\left(\boldsymbol{z}_o^{d} - \boldsymbol{z}_o\right), \qquad k_o = 20
 $$
+
 展开为分量形式：
+
 $$
 \boxed{\;\dot{\boldsymbol{q}}_o = k_o \begin{bmatrix} \hat{u}_x\,\left(d_{safe} - d\right) \\[3pt] \hat{u}_y\,\left(d_{safe} - d\right) \\[3pt] \theta_d - \theta \end{bmatrix}\;}
 $$
+
 物理意义：
+
 - **径向排斥分量**：沿 $\hat{\boldsymbol{u}}$（离开障碍物方向）施加速度，幅值正比于距离亏缺 $d_{safe} - d$，将距离镇定到 $d_{safe}$；
+
 - **航向分量**：比例镇定航向到切向逃逸角 $\theta_d$，使机器人沿障碍物边界滑行而非正面冲撞。
 
-### 任务切换规则设计与零空间合成
+#### 任务切换规则设计与零空间合成
 
 
 
