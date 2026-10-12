@@ -207,7 +207,7 @@ $$
 
 #### 雅可比矩阵
 
-对 $d$ 求梯度：$\nabla_{\boldsymbol{p}} d = \hat{\boldsymbol{u}}^T$；对 $\theta$ 求梯度为 $[0\; 0\; 1]$。故：
+对 $d$ 求梯度：$`\nabla_{\boldsymbol{p}} d = \hat{\boldsymbol{u}}^T`$；对 $\theta$ 求梯度为 $[0\; 0\; 1]$。故：
 
 $$
 J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\partial d}{\partial y} & \dfrac{\partial d}{\partial \theta} \\\\[6pt] \dfrac{\partial \theta}{\partial x} & \dfrac{\partial \theta}{\partial y} & \dfrac{\partial \theta}{\partial \theta} \end{bmatrix}
