@@ -304,7 +304,7 @@ $$
 ### 3.6 姿态环（角速度指令）
 
 $$
-\boxed{\ \omega_c = K_{A0}\,\alpha_{ff} + K_{A1}\,\mathrm{sig}(\rho\tilde{\alpha},\,P_1) + K_{A2}\,\mathrm{sig}(\rho\tilde{\alpha},\,P_2)\ }
+\boxed{\ \omega_c = K_{A0}\,\frac{\alpha_{ff}}{\rho} + K_{A1}\,\mathrm{sig}(\rho\tilde{\alpha},\,P_1) + K_{A2}\,\mathrm{sig}(\rho\tilde{\alpha},\,P_2)\ }
 $$
 
 ## 4. 内环：轮速 PID
