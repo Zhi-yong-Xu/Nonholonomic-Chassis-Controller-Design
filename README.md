@@ -1,5 +1,5 @@
-# Trajectory-Tracking-Controller-Design-for-Nonholonomic-Chassis
-A switching control strategy combining forward and reverse driving is proposed to prevent large attitude flips from position overshoot, where a fixed-time differentiator provides attitude feedforward compensation to avoid control singularities.
+# Nonholonomic Chassis Controller Design Based on Null-Space Behavioral Control
+On the basis of the switching control strategy designed for the V1 warehouse, null-space behavioral control is integrated to simultaneously realize trajectory tracking and obstacle avoidance.
 
 ## 文件说明
 `/model` --- 非完整约束底盘(husky)的mjcf模型
@@ -10,13 +10,10 @@ A switching control strategy combining forward and reverse driving is proposed t
 
 `main.py` --- 主文件，直接 `python main.py` 运行
 
-`husky_EW_PID.py` --- 对比文件，PID算法控制，在速度大时震荡
-
 `/config/husky.yaml` --- 参数配置文件，支持轨迹切换，控制参数配置
 
 `/src` --- 观测器，控制器等代码实现
 
-`/MATsim` --- 控制器对应的matlab仿真
 
 
 
