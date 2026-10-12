@@ -183,7 +183,62 @@ $$
 
 获得。
 
-### 避障任务函数
+### 避障任务函数和雅可比矩阵
+
+#### 任务函数
+
+设障碍物边界点集为 $\partial\mathcal{O}$，先取最近点：
+
+$$
+\boldsymbol{p}_o = \arg\min_{\boldsymbol{p}_j \in \partial\mathcal{O}} \|\boldsymbol{p} - \boldsymbol{p}_j\|^2, \qquad
+d(\boldsymbol{q}) = \|\boldsymbol{p} - \boldsymbol{p}_o\|, \qquad
+\hat{\boldsymbol{u}} = \frac{\boldsymbol{p} - \boldsymbol{p}_o}{d}
+$$
+
+
+避障任务函数取二维向量：
+
+$$
+h_o(\boldsymbol{q}) = \begin{bmatrix} d(\boldsymbol{q}) \\\\ \theta(\boldsymbol{q}) \end{bmatrix} \in \mathbb{R}^2,
+\qquad \boldsymbol{z}_o = \begin{bmatrix} d \\\\ \theta \end{bmatrix}
+$$
+
+即“到障碍物的径向距离 + 当前航向”。
+
+#### 雅可比矩阵
+
+对 $d$ 求梯度：$\nabla_{\boldsymbol{p}} d = \hat{\boldsymbol{u}}^T$；对 $\theta$ 求梯度为 $[0\; 0\; 1]$。故：
+
+$$
+J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\partial d}{\partial y} & \dfrac{\partial d}{\partial \theta} \\\\[6pt] \dfrac{\partial \theta}{\partial x} & \dfrac{\partial \theta}{\partial y} & \dfrac{\partial \theta}{\partial \theta} \end{bmatrix}
+= \begin{bmatrix} \hat{u}_x & \hat{u}_y & 0 \\\\ 0 & 0 & 1 \end{bmatrix} \in \mathbb{R}^{2\times 3}
+$$
+其两行单位正交，因此伪逆有解析形式 $J_o^{+} = J_o^T$：
+$$
+J_o^{+} = \begin{bmatrix} \hat{u}_x & 0 \\ \hat{u}_y & 0 \\ 0 & 1 \end{bmatrix}
+$$
+### 3.3 期望任务变量与逃逸航向
+期望任务变量为“安全距离 + 切向逃逸航向”：
+$$
+\boldsymbol{z}_o^{d} = \begin{bmatrix} d_{safe} \\ \theta_d \end{bmatrix}
+$$
+其中 $\theta_d$ 把“指向障碍物”的方向旋转 $\pm 90°$，绕行侧依据智能体相对障碍物的纵向位置：
+$$
+\theta_d = \operatorname{atan2}(y_o - y,\; x_o - x) + \sigma\frac{\pi}{2}, \qquad
+\sigma = \begin{cases} +1, & y > y_o \\ -1, & y \leq y_o \end{cases}
+$$
+### 3.4 任务速度指令
+任务空间误差做比例控制，再经 $J_o^{+}$ 映射到构型空间：
+$$
+\dot{\boldsymbol{q}}_o = J_o^{+}\, k_o\left(\boldsymbol{z}_o^{d} - \boldsymbol{z}_o\right), \qquad k_o = 20
+$$
+展开为分量形式：
+$$
+\boxed{\;\dot{\boldsymbol{q}}_o = k_o \begin{bmatrix} \hat{u}_x\,\left(d_{safe} - d\right) \\[3pt] \hat{u}_y\,\left(d_{safe} - d\right) \\[3pt] \theta_d - \theta \end{bmatrix}\;}
+$$
+物理意义：
+- **径向排斥分量**：沿 $\hat{\boldsymbol{u}}$（离开障碍物方向）施加速度，幅值正比于距离亏缺 $d_{safe} - d$，将距离镇定到 $d_{safe}$；
+- **航向分量**：比例镇定航向到切向逃逸角 $\theta_d$，使机器人沿障碍物边界滑行而非正面冲撞。
 
 ### 任务切换规则设计与零空间合成
 
