@@ -22,31 +22,63 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 
 # 轨迹跟踪切换控制器设计见V1版本的 `Readme.md`
 
-# NSBC基本理论
+### 基于零空间行为控制的任务设计流程
 
-1. **任务函数设计**：设计 $i$ 个任务定义任务函数 $z_i = f_i(q) \in \mathbb{R}^{m_i}$，它是关于 $q$ 的可测函数，并给定期望值 $z_i^*$。
-2. **求解任务函数的雅可比**：定义任务雅可比矩阵
+1. **任务函数设计**：设计 $i$ 个任务，定义任务函数
 
-    $$
-    J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i \times 3}
-    $$
-    
-    得到 $\dot z_i = J_i\,\dot q$。
-
-3. **设计任务控制率**：
-   
    $$
-    \dot z_i^{des} = \dot z_i^* - \Lambda_i(z_i)\,\big(z_i - z_i^*\big)
+   z_i = f_i(q) \in \mathbb{R}^{m_i}
    $$
 
-   其中 $\Lambda_i$ 为增益
+   其中 $z_i$ 是关于 $q$ 的可测函数，并给定期望值 $z_i^*$。
 
-4. **任务速度映射**：解 $J_i\dot q_i = \dot z_i^{\mathrm{des}}$ 的**最小范数解**：
-    $$
-    \boxed{\;\dot q_i = J_i^{+}\,\dot z_i^{\mathrm{des}},\qquad
-    J_i^{+} = J_i^T\big(J_iJ_i^T\big)^{-1}\;}\quad(J_i\text{ 满行秩时})
-    $$
-    它满足 $J_i\dot q_i = \dot z_i^{\mathrm{des}}$（任务速率精确实现），且在所有可行实现中位姿速度范数最小。
+2. **求解任务函数的雅可比矩阵**：定义任务雅可比矩阵
+
+   $$
+   J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i \times 3}
+   $$
+
+   从而得到
+
+   $$
+   \dot z_i = J_i \dot q
+   $$
+
+3. **设计任务控制律**：定义期望任务速度
+
+   $$
+   \dot z_i^{\mathrm{des}} = \dot z_i^* - \Lambda_i(z_i)\big(z_i - z_i^*\big)
+   $$
+
+   其中 $\Lambda_i$ 为增益矩阵。
+
+4. **任务速度映射**：求解
+
+   $$
+   J_i \dot q_i = \dot z_i^{\mathrm{des}}
+   $$
+
+   的最小范数解：
+
+   $$
+   \dot q_i = J_i^{+}\,\dot z_i^{\mathrm{des}}
+   $$
+
+   其中
+
+   $$
+   J_i^{+} = J_i^T\big(J_i J_i^T\big)^{-1}
+   $$
+
+   该伪逆在 $J_i$ 满行秩时成立。此时满足
+
+   $$
+   J_i \dot q_i = \dot z_i^{\mathrm{des}}
+   $$
+
+   即任务速率被精确实现，且在所有可行解中 $\dot q_i$ 的范数最小。
+
+5. **优先级融合与逆映射**：按照任务优先级对各任务速度进行融合，得到总的期望广义速度 $\dot q_{\mathrm{des}}$，再通过底盘运动学逆映射得到底盘控制输入 $(v,\omega)$。
 
 # 展示
 
