@@ -124,9 +124,8 @@ $$
 \boldsymbol{q} = \begin{bmatrix} x \\\\ y \\\\ \theta \end{bmatrix} \in \mathbb{R}^3
 $$
 
-其中 $(x,y)$ 为底盘位置，$\theta$ 为航向角。
 
-- **任务空间**：$\boldsymbol{z}_i = h_i(\boldsymbol{q}) \in \mathbb{R}^{m_i}$，第 $i$ 个任务函数的像
+- **任务空间**：$`\mathbf{z}_i = h_i(\mathbf{q}) \in \mathbb{R}^{m_i}`$，第 $i$ 个任务函数的像
 
 - **控制空间**：$\boldsymbol{v} \in \mathbb{R}^2$，底盘车体坐标速度
 
