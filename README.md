@@ -178,7 +178,7 @@ $$
 由于本项目的控制律在V1中已经设计完成（计为$`\boldsymbol{v}_m = [ u_m; \omega_m]`$），故对应的任务空间速度通过
 
 $$
-\dot{\boldsymbol{q}}_m = R(\theta)R^{+}(\theta)\,\boldsymbol{v}_m
+\dot{\boldsymbol{q}}_m = R(\theta)\,\boldsymbol{v}_m
 $$
 
 获得。
