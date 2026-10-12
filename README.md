@@ -215,10 +215,18 @@ J_o(\boldsymbol{q}) = \begin{bmatrix} \dfrac{\partial d}{\partial x} & \dfrac{\p
 = \begin{bmatrix} \hat{u}_x & \hat{u}_y & 0 \\\\ 0 & 0 & 1 \end{bmatrix} \in \mathbb{R}^{2\times 3}
 $$
 
-其两行单位正交，因此伪逆有解析形式 $J_o^{+} = J_o^T$：
+其中 $`\hat{u}_x = \frac{x - x_o}{\|\boldsymbol{p}-\boldsymbol{p}_o\|}`$, $\hat{u}_y = \frac{y - y_o}{\|\boldsymbol{p}-\boldsymbol{p}_o\|}$。其两行单位正交，因此伪逆有解析形式 $J_o^{+} = J_o^T$：
 
 $$
 J_o^{+} = \begin{bmatrix} \hat{u}_x & 0 \\\\ \hat{u}_y & 0 \\\\ 0 & 1 \end{bmatrix}
+$$
+
+零空间投影算子（切向投影结构）：
+
+$$
+N_o = I_3 - J_o^T J_o
+= \begin{bmatrix} \hat{\boldsymbol{\tau}}\hat{\boldsymbol{\tau}}^T & \boldsymbol{0} \\\\ \boldsymbol{0}^T & 0 \end{bmatrix}, \qquad
+\hat{\boldsymbol{\tau}} = \begin{bmatrix} -\hat{u}_y \\\\ \hat{u}_x \end{bmatrix}
 $$
 
 #### 期望任务变量与逃逸航向
