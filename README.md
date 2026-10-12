@@ -25,11 +25,8 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 ### 差速轮式机器人的运动学方程
 
 $$
-\dot{q} = \begin{bmatrix}\cos\theta & 0 \\\\ \sin\theta & 0 \\\\ 0 & 1\end{bmatrix}\begin{bmatrix}v \\\\ \omega\end{bmatrix}
-$$
-$$
 \dot q = J_m(\theta)\begin{bmatrix}v\\\\ \omega\end{bmatrix},\qquad
-J_m = \begin{bmatrix}c_\theta & 0\\\\ s_\theta & 0\\\\ 0 & 1\end{bmatrix},\qquad
+J_m =  \begin{bmatrix}\cos\theta & 0 \\\\ \sin\theta & 0 \\\\ 0 & 1\end{bmatrix},\qquad
 J_m^T J_m = I_2
 $$
 
@@ -38,6 +35,11 @@ $$
 - $q=[x,y,\theta]^T$ 是位姿；
 - $v$ 是线速度；
 - $\omega$ 是角速度。
+
+**非完整约束**：$\dot p = v\,h$，其中
+$$
+h \triangleq \begin{bmatrix}c_\theta\\\\ s_\theta\end{bmatrix}
+$$
 
 ## 2. 误差系统建模
 
