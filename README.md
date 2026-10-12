@@ -83,19 +83,7 @@ $$
 ### 多级零空间行为控制链式展开
 
 $$
-\dot{q}_{\mathrm{des}}
-= \dot{q}_1
-+ N_1 \Big(
-    \dot{q}_2
-    + N_2 \big(
-        \dot{q}_3
-        + \cdots
-        + N_{p-2} \big(
-            \dot{q}_{p-1}
-            + N_{p-1} \dot{q}_p
-        \big)
-    \big)
-\Big)
+\dot{q}_{\mathrm{des}}= \dot{q}_1+ N_1 \Big(\dot{q}_2+ N_2 \big(\dot{q}_3 + \cdots + N_{p-2} \big( \dot{q}_{p-1} + N_{p-1} \dot{q}_p \big) \big) \Big)
 $$
 
 其中：
