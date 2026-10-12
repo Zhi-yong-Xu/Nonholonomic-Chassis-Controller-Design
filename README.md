@@ -24,17 +24,29 @@ On the basis of the switching control strategy designed for the V1 warehouse, nu
 
 # NSBC基本理论
 
-1. **任务函数设计**：设计 $i$ 个任务定义任务函数 $z_i = f_i(q) \in \mathbb{R}^{m_i}$，并给定期望值 $z_i^*$。
+1. **任务函数设计**：设计 $i$ 个任务定义任务函数 $z_i = f_i(q) \in \mathbb{R}^{m_i}$，它是关于 $q$ 的可测函数，并给定期望值 $z_i^*$。
 2. **求解任务函数的雅可比**：定义任务雅可比矩阵
 
-  $$
-  J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i \times 3}
-  $$
-  
-  得到 $\dot z_i = J_i\,\dot q$。
+    $$
+    J_i \triangleq \frac{\partial f_i}{\partial q} \in \mathbb{R}^{m_i \times 3}
+    $$
+    
+    得到 $\dot z_i = J_i\,\dot q$。
 
-3. 
+3. **设计任务控制率**：
+   
+   $$
+    \dot z_i^{des} = \dot z_i^* - \Lambda_i(z_i)\,\big(z_i - z_i^*\big)
+   $$
 
+   其中 $\Lambda_i$ 为增益
+
+4. **任务速度映射**：解 $J_i\dot q_i = \dot z_i^{\mathrm{des}}$ 的**最小范数解**：
+    $$
+    \boxed{\;\dot q_i = J_i^{+}\,\dot z_i^{\mathrm{des}},\qquad
+    J_i^{+} = J_i^T\big(J_iJ_i^T\big)^{-1}\;}\quad(J_i\text{ 满行秩时})
+    $$
+    它满足 $J_i\dot q_i = \dot z_i^{\mathrm{des}}$（任务速率精确实现），且在所有可行实现中位姿速度范数最小。
 
 # 展示
 
