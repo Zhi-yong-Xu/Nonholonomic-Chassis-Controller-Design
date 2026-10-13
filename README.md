@@ -248,7 +248,7 @@ $$
 设视线方位角（车 → 障碍物）：
 
 $$
-\varphi = \operatorname{atan2}(y_o - y,\; x_o - x)
+\varphi = {atan2}(y_o - y,\; x_o - x)
 $$
 
 两个切向逃逸航向候选（视线旋转 $\pm 90°$）：
@@ -263,6 +263,34 @@ $$
 $$
 
 
+故最小转角准则退化为一个**符号判决**：
+
+$$
+\sigma^{*} = \begin{cases}
++1, & \operatorname{wrap}(\varphi + \tfrac{\pi}{2} - \theta) \in (-\tfrac{\pi}{2},\, \tfrac{\pi}{2}] \;\;\text{即}\;\; \cos\big(\varphi + \tfrac{\pi}{2} - \theta\big) \geq 0 \\\\
+-1, & \text{otherwise}
+\end{cases}
+$$
+
+判决变量 $\sigma^*$ 在 $\theta_d^{+}-\theta \approx \pm\pi/2$ 附近对 $\theta$、$\varphi$ 的微小摄动高度敏感，若每个控制周期重新判决会产生**绕行侧高频切换（抖振）**，且绕行中途换侧会导致期望航向跳变 $\pi$，产生不可执行的速度指令。故引入**带迟滞的双状态锁存器**：
+
+**状态定义**：锁存变量 $\sigma_L \in \{+1, -1, \text{free}\}$，迟滞带宽 $\delta_h > 0$。
+
+**事件驱动的状态转移**：
+$$
+\text{入场事件 } E_{in}: \;\; d \leq d_{safe} \;\wedge\; \sigma_L = \text{free}
+\;\;\Longrightarrow\;\;
+\sigma_L \leftarrow \arg\min_{\sigma\in\{\pm1\}}\Big|\operatorname{wrap}\big(\theta_d^{\sigma} - \theta\big)\Big| \quad (\text{判决一次并锁存})
+$$
+$$
+\text{退场事件 } E_{out}: \;\; d \geq d_{safe} + \delta_h \;\wedge\; \sigma_L \in \{+1,-1\}
+\;\;\Longrightarrow\;\;
+\sigma_L \leftarrow \text{free} \quad (\text{释放锁存})
+$$
+$$
+\text{保持区间}: \;\; d_{safe} < d < d_{safe} + \delta_h \;\wedge\; \sigma_L \in \{+1,-1\}
+\;\;\Longrightarrow\;\; \sigma_L \text{ 不变（迟滞带，防边界抖振）}
+$$
 
 
 
