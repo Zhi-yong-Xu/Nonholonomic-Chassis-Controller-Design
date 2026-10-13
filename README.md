@@ -307,8 +307,24 @@ g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\\\ k_\theta(\theta_d - \theta
 $$
 
 
-#### 任务切换规则设计与零空间合成
+### 任务切换规则设计与零空间合成
 
+任务切换（注意阈值语义是**间隙距离**）：
+
+$$
+s = \begin{cases} 0, & d > d_{safe} \\ 1, & d \leq d_{safe} \end{cases}
+$$
+
+零空间合成与执行：
+
+$$
+\dot{\boldsymbol{q}}_{cmd} = \begin{cases}
+R(\theta)\,\boldsymbol{v}_m, & s = 0 \\[6pt]
+\dot{\boldsymbol{q}}_o + N_o\,R(\theta)\,\boldsymbol{v}_m, & s = 1
+\end{cases}
+\qquad
+\boldsymbol{v}_{cmd} = R^{+}(\theta)\,\dot{\boldsymbol{q}}_{cmd}, 
+$$
 
 
 # 展示
