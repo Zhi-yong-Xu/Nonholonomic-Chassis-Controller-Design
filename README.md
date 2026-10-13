@@ -259,7 +259,7 @@ $$
 $$
 
 $$
-\theta_d = \begin{cases}\theta_d^{+} & cos(wrap(\theta_d^{+}-\varphi))\geq 0\\\\\theta_d^{-} &  cos(wrap(\theta_d^{+}-\varphi)) < 0\end{cases}
+\theta_d = \begin{cases}\theta_d^{+} & cos(wrap(\theta_d^{+}-\theta))\geq 0\\\\\theta_d^{-} &  cos(wrap(\theta_d^{+}-\theta)) < 0\end{cases}
 $$
 
 
