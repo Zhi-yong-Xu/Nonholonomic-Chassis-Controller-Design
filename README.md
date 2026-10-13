@@ -272,60 +272,30 @@ $$
 \end{cases}
 $$
 
-判决变量 $\sigma^*$ 在 $\theta_d^{+}-\theta \approx \pm\pi/2$ 附近对 $\theta$、$\varphi$ 的微小摄动高度敏感，若每个控制周期重新判决会产生**绕行侧高频切换（抖振）**，且绕行中途换侧会导致期望航向跳变 $\pi$，产生不可执行的速度指令。故引入**带迟滞的双状态锁存器**：
+判决变量 $\sigma^*$ 在 $\theta_d^{+}-\theta \approx \pm\pi/2$ 附近对 $`\theta`$、$`\varphi`$ 的微小摄动高度敏感，若每个控制周期重新判决会产生**绕行侧高频切换（抖振）**，且绕行中途换侧会导致期望航向跳变 $\pi$，产生不可执行的速度指令。故引入**状态锁存器**：
 
-**状态定义**：锁存变量 $\sigma_L \in \{+1, -1, \text{free}\}$，迟滞带宽 $\delta_h > 0$。
+**状态定义**：锁存变量 $`\sigma_L \in \{+1,\ -1,\ \text{free}\}`$。
 
-**事件驱动的状态转移**：
+**事件驱动的状态转移规则**：
+
 $$
-\text{入场事件 } E_{in}: \;\; d \leq d_{safe} \;\wedge\; \sigma_L = \text{free}
-\;\;\Longrightarrow\;\;
-\sigma_L \leftarrow \arg\min_{\sigma\in\{\pm1\}}\Big|\operatorname{wrap}\big(\theta_d^{\sigma} - \theta\big)\Big| \quad (\text{判决一次并锁存})
-$$
-$$
-\text{退场事件 } E_{out}: \;\; d \geq d_{safe} + \delta_h \;\wedge\; \sigma_L \in \{+1,-1\}
-\;\;\Longrightarrow\;\;
-\sigma_L \leftarrow \text{free} \quad (\text{释放锁存})
-$$
-$$
-\text{保持区间}: \;\; d_{safe} < d < d_{safe} + \delta_h \;\wedge\; \sigma_L \in \{+1,-1\}
-\;\;\Longrightarrow\;\; \sigma_L \text{ 不变（迟滞带，防边界抖振）}
+\sigma_L \leftarrow
+\begin{cases}
+\operatorname{sign}\big(\sin(\theta - \varphi)\big), & d \leq d_{safe} \ \wedge\ \sigma_L = \text{free} \quad \\\\
+\text{free}, & d \geq d_{safe} + \delta_h \ \wedge\ \sigma_L \neq \text{free} \quad \\\\
+\sigma_L, & \text{otherwise}
+\end{cases}
 $$
 
 
-
-
-期望任务变量为“安全距离 + 切向逃逸航向”：
+**最终逃逸航向**：
 
 $$
-\boldsymbol{z}_o^{d} = \begin{bmatrix} d_{safe} \\\\ \theta_d \end{bmatrix}
+\theta_d = \varphi + \sigma_L\,\frac{\pi}{2}
 $$
 
-其中 $\theta_d$ 把“指向障碍物”的方向旋转 $\pm 90°$，绕行侧依据智能体相对障碍物的纵向位置：
 
-$$
-\theta_d = \operatorname{atan2}(y_o - y,\; x_o - x) + \sigma\frac{\pi}{2}, \qquad
-\sigma = \begin{cases} +1, & y > y_o \\ -1, & y \leq y_o \end{cases}
-$$
 
-#### 任务速度指令
-任务空间误差做比例控制，再经 $J_o^{+}$ 映射到构型空间：
-
-$$
-\dot{\boldsymbol{q}}_o = J_o^{+}\, k_o\left(\boldsymbol{z}_o^{d} - \boldsymbol{z}_o\right), \qquad k_o = 20
-$$
-
-展开为分量形式：
-
-$$
-\boxed{\;\dot{\boldsymbol{q}}_o = k_o \begin{bmatrix} \hat{u}_x\,\left(d_{safe} - d\right) \\[3pt] \hat{u}_y\,\left(d_{safe} - d\right) \\[3pt] \theta_d - \theta \end{bmatrix}\;}
-$$
-
-物理意义：
-
-- **径向排斥分量**：沿 $\hat{\boldsymbol{u}}$（离开障碍物方向）施加速度，幅值正比于距离亏缺 $d_{safe} - d$，将距离镇定到 $d_{safe}$；
-
-- **航向分量**：比例镇定航向到切向逃逸角 $\theta_d$，使机器人沿障碍物边界滑行而非正面冲撞。
 
 #### 任务切换规则设计与零空间合成
 
