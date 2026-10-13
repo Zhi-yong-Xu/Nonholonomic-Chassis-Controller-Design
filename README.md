@@ -302,7 +302,7 @@ $$
 \dot{\boldsymbol{q}}_o =
 \mathbb{1}[\sigma_L \neq \text{free}]
 \begin{bmatrix}
-g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\ k_\theta(\theta_d - \theta)
+g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\\\ k_\theta(\theta_d - \theta)
 \end{bmatrix}
 $$
 
