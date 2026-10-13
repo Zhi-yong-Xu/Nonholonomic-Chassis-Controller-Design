@@ -229,7 +229,42 @@ N_o = I_3 - J_o^T J_o
 \hat{\boldsymbol{\tau}} = \begin{bmatrix} -\hat{u}_y \\\\ \hat{u}_x \end{bmatrix}
 $$
 
-#### 期望任务变量与逃逸航向
+#### 距离通道：势函数梯度律
+
+取 Khatib 逆距离势场（$`d \leq \sigma_{o}`$ 内）：
+
+$$
+U_{rep}(d) = \frac{1}{2}\,k_p\frac{1}{d},
+$$
+
+距离通道的任务空间速度取势场负梯度：
+$$
+g(d) \;\triangleq\; -\frac{dU_{rep}}{dd} = \frac{k_p}{d^{3}}\;\geq\; 0
+$$
+
+#### 逃逸航向：最小转角判决 + 锁存
+
+设视线方位角（车 → 障碍物）：
+
+$$
+\varphi = \operatorname{atan2}(y_o - y,\; x_o - x)
+$$
+
+两个切向逃逸航向候选（视线旋转 $\pm 90°$）：
+
+$$
+\theta_d^{+} = \varphi + \frac{\pi}{2}, \qquad
+\theta_d^{-} = \varphi - \frac{\pi}{2}
+$$
+
+$$
+\theta_d = \begin{cases}\theta_d^{+} & cos(wrap(\theta_d^{+}-\varphi))\geq 0\\\\\theta_d^{-} &  cos(wrap(\theta_d^{+}-\varphi)) < 0\end{cases}
+$$
+
+
+
+
+
 
 期望任务变量为“安全距离 + 切向逃逸航向”：
 
