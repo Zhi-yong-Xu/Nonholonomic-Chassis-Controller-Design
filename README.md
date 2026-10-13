@@ -234,10 +234,11 @@ $$
 取 Khatib 逆距离势场（$`d \leq \sigma_{o}`$ 内）：
 
 $$
-U_{rep}(d) = \frac{1}{2}\,k_p\frac{1}{d},
+U_{rep}(d) = \frac{1}{2}\,k_p\frac{1}{d^2},
 $$
 
 距离通道的任务空间速度取势场负梯度：
+
 $$
 g(d) \;\triangleq\; -\frac{dU_{rep}}{dd} = \frac{k_p}{d^{3}}\;\geq\; 0
 $$
