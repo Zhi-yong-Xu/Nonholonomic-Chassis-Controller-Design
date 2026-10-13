@@ -267,7 +267,7 @@ $$
 
 $$
 \sigma^{*} = \begin{cases}
-+1, & \operatorname{wrap}(\varphi + \tfrac{\pi}{2} - \theta) \in (-\tfrac{\pi}{2},\, \tfrac{\pi}{2}] \;\;\text{即}\;\; \cos\big(\varphi + \tfrac{\pi}{2} - \theta\big) \geq 0 \\\\
++1, & {wrap}(\varphi + \tfrac{\pi}{2} - \theta) \in (-\tfrac{\pi}{2},\, \tfrac{\pi}{2}] \;\;\text{即}\;\; \cos\big(\varphi + \tfrac{\pi}{2} - \theta\big) \geq 0 \\\\
 -1, & \text{otherwise}
 \end{cases}
 $$
