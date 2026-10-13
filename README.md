@@ -281,7 +281,7 @@ $$
 $$
 \sigma_L \leftarrow
 \begin{cases}
-\operatorname{sign}\big(\sin(\theta - \varphi)\big), & d \leq d_{safe} \ \wedge\ \sigma_L = \text{free} \quad \\\\
+{sign}\big(\sin(\theta - \varphi)\big), & d \leq d_{safe} \ \wedge\ \sigma_L = \text{free} \quad \\\\
 \text{free}, & d \geq d_{safe} + \delta_h \ \wedge\ \sigma_L \neq \text{free} \quad \\\\
 \sigma_L, & \text{otherwise}
 \end{cases}
