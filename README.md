@@ -282,7 +282,7 @@ $$
 \sigma_L \leftarrow
 \begin{cases}
 {sign}\big(\sin(\theta - \varphi)\big), & d \leq d_{safe} \ \wedge\ \sigma_L = \text{free} \quad \\\\
-\text{free}, & d \geq d_{safe} + \delta_h \ \wedge\ \sigma_L \neq \text{free} \quad \\\\
+\text{free}, & d \geq d_{safe}  \ \wedge\ \sigma_L \neq \text{free} \quad \\\\
 \sigma_L, & \text{otherwise}
 \end{cases}
 $$
@@ -294,7 +294,17 @@ $$
 \theta_d = \varphi + \sigma_L\,\frac{\pi}{2}
 $$
 
+### 避障任务构型空间速度
 
+$$
+\theta_d = \varphi + \sigma_L\,\frac{\pi}{2},
+\qquad
+\dot{\boldsymbol{q}}_o =
+\mathbb{1}[\sigma_L \neq \text{free}]
+\begin{bmatrix}
+g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\ k_\theta(\theta_d - \theta)
+\end{bmatrix}
+$$
 
 
 #### 任务切换规则设计与零空间合成
