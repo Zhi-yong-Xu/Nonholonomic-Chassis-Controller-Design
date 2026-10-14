@@ -279,6 +279,40 @@ $$
 \end{cases}
 $$
 
+**对应的向量法**：
+
+**判决向量定义**：
+
+机器人指向障碍中心的单位视线向量：
+
+$$
+\hat{\boldsymbol g} = \frac{\boldsymbol c_o - \boldsymbol p}{\|\boldsymbol c_o - \boldsymbol p\|}
+$$
+
+左切向候选逃逸方向（视线逆时针旋转 $90°$，即 $\theta_d^{+}$ 方向的单位向量）：
+
+$$
+\boldsymbol u^{+} = R(\tfrac{\pi}{2})\,\hat{\boldsymbol g}
+= \begin{bmatrix} -\hat g_y \\ \hat g_x \end{bmatrix}
+= \begin{bmatrix} -\sin\varphi \\ \cos\varphi \end{bmatrix}, \qquad
+\boldsymbol u^{-} = -\boldsymbol u^{+}
+$$
+
+机器人指向参考点的向量（判决基准向量）：
+
+$$
+\boldsymbol e_t = \boldsymbol q_t - \boldsymbol p
+$$
+
+**侧向判决**：取 $\boldsymbol e_t$ 与左切向 $\boldsymbol u^{+}$ 的内积符号：
+
+$$
+\sigma^{*} = \begin{cases}
++1, & (\boldsymbol u^{+})^{T}\,\boldsymbol e_t \;\geq\; 0 \quad\text{（左切向朝目标半平面，左绕）} \\\\
+-1, & (\boldsymbol u^{+})^{T}\,\boldsymbol e_t \;<\; 0 \quad\text{（右切向朝目标半平面，右绕）}
+\end{cases}
+$$
+
 
 
 **最终逃逸航向**：
