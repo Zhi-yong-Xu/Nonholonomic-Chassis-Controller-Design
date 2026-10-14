@@ -243,12 +243,18 @@ $$
 g(d) \;\triangleq\; -\frac{dU_{rep}}{dd} = \frac{k_p}{d^{3}}\;\geq\; 0
 $$
 
-#### 逃逸航向：最小转角判决 + 锁存
+#### 逃逸航向：目标方向最小夹角判决
 
 设视线方位角（车 → 障碍物）：
 
 $$
-\varphi = {atan2}(y_o - y,\; x_o - x)
+\varphi = \mathrm{atan2}(y_o - y,\; x_o - x)
+$$
+
+设参考点（跟踪目标）方位角（车 → 参考点）：
+
+$$
+\theta_t = \mathrm{atan2}(y_t - y,\; x_t - x)
 $$
 
 两个切向逃逸航向候选（视线旋转 $\pm 90°$）：
@@ -258,40 +264,27 @@ $$
 \theta_d^{-} = \varphi - \frac{\pi}{2}
 $$
 
+判决基准由**参考点方向 $\theta_t$**：选择与目标方向夹角不超过 $90°$ 的切向，使绕行路径偏向目标一侧：
+
 $$
-\theta_d = \begin{cases}\theta_d^{+} & cos(wrap(\theta_d^{+}-\theta))\geq 0\\\\\theta_d^{-} &  cos(wrap(\theta_d^{+}-\theta)) < 0\end{cases}
+\theta_d = \begin{cases}\theta_d^{+} & \cos\big(\mathrm{wrap}(\theta_d^{+}-\theta_t)\big)\geq 0\\\\\theta_d^{-} & \cos\big(\mathrm{wrap}(\theta_d^{+}-\theta_t)\big) < 0\end{cases}
 $$
 
-
-故最小转角准则退化为一个**符号判决**：
+故目标方向最小夹角准则退化为一个**符号判决**：
 
 $$
 \sigma^{*} = \begin{cases}
-+1, & {wrap}(\varphi + \tfrac{\pi}{2} - \theta) \in (-\tfrac{\pi}{2},\, \tfrac{\pi}{2}] \;\;\text{即}\;\; \cos\big(\varphi + \tfrac{\pi}{2} - \theta\big) \geq 0 \\\\
++1, & \mathrm{wrap}\big(\varphi + \tfrac{\pi}{2} - \theta_t\big) \in \big(-\tfrac{\pi}{2},\, \tfrac{\pi}{2}\big] \;\;\text{即}\;\; \cos\big(\varphi + \tfrac{\pi}{2} - \theta_t\big) \geq 0 \\\\
 -1, & \text{otherwise}
 \end{cases}
 $$
 
-判决变量 $\sigma^*$ 在 $\theta_d^{+}-\theta \approx \pm\pi/2$ 附近对 $`\theta`$、$`\varphi`$ 的微小摄动高度敏感，若每个控制周期重新判决会产生**绕行侧高频切换（抖振）**，且绕行中途换侧会导致期望航向跳变 $\pi$，产生不可执行的速度指令。故引入**状态锁存器**：
-
-**状态定义**：锁存变量 $`\sigma_L \in \{+1,\ -1,\ \text{free}\}`$。
-
-**事件驱动的状态转移规则**：
-
-$$
-\sigma_L \leftarrow
-\begin{cases}
-{sign}\big(\sin(\theta - \varphi)\big), & d \leq d_{safe} \ \wedge\ \sigma_L = \text{free} \quad \\\\
-\text{free}, & d \geq d_{safe}  \ \wedge\ \sigma_L \neq \text{free} \quad \\\\
-\sigma_L, & \text{otherwise}
-\end{cases}
-$$
 
 
 **最终逃逸航向**：
 
 $$
-\theta_d = \varphi + \sigma_L\,\frac{\pi}{2}
+\theta_d = \varphi + \sigma^*\,\frac{\pi}{2}
 $$
 
 ### 避障任务构型空间速度
@@ -300,9 +293,8 @@ $$
 \theta_d = \varphi + \sigma_L\,\frac{\pi}{2},
 \qquad
 \dot{\boldsymbol{q}}_o =
-\mathbb{1}[\sigma_L \neq \text{free}]
 \begin{bmatrix}
-g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\\\ k_\theta(\theta_d - \theta)
+g_{sat}(d)\,\hat{u}_x \\\\ g_{sat}(d)\,\hat{u}_y \\\\ k_\theta wrap(\theta_d - \theta)
 \end{bmatrix}
 $$
 
